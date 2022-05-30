@@ -1,10 +1,7 @@
-from django.shortcuts import render
 from rest_framework import generics, viewsets
-from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
-from rest_framework.response import Response
-
-from testsite.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
+from places_to_rest.models import UsersActivity
+from testsite.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly, IsAdminOrOwnerOrReadOnly
 from .models import PlacesToRest, Category
 from .serializers import PlacesSerializer
 
@@ -26,27 +23,27 @@ from .serializers import PlacesSerializer
 #         return  Response({'cats': cats.name})
 
 
-
-
+#
 class PlacesAPIList(generics.ListCreateAPIView):
     queryset = PlacesToRest.objects.all()
     serializer_class = PlacesSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
+#
 class PlacesAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = PlacesToRest.objects.all()
     serializer_class = PlacesSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAdminOrOwnerOrReadOnly,)
 
-class PlacesAPIDestroy(generics.RetrieveDestroyAPIView):
-    queryset = PlacesToRest.objects.all()
-    serializer_class = PlacesSerializer
-    permission_classes = (IsAdminOrReadOnly, )
 #
-# class PlacesAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+# class PlacesAPIDestroy(generics.RetrieveDestroyAPIView):
 #     queryset = PlacesToRest.objects.all()
 #     serializer_class = PlacesSerializer
-
+#     permission_classes = (IsAdminOrReadOnly, )
+#
+class PlacesAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PlacesToRest.objects.all()
+    serializer_class = PlacesSerializer
+    permission_classes = (IsAdminOrOwnerOrReadOnly, )
 
 # class PlacesAPIView(generics.ListAPIView):
 #     def get(self, request):

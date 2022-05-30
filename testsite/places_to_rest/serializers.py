@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from places_to_rest.models import PlacesToRest
+from places_to_rest.models import PlacesToRest, UsersActivity
 
 
 class PlacesSerializer(serializers.ModelSerializer):
@@ -8,6 +8,12 @@ class PlacesSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlacesToRest
         fields = "__all__"
+
+# class ActivitySerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = UsersActivity
+#         fields = "__all__"
 
     # def create(self, validated_data):
     #     return PlacesToRest.objects.create(**validated_data)

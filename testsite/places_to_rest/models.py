@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-
 class PlacesToRest(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
@@ -14,6 +13,18 @@ class PlacesToRest(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class UsersActivity(models.Model):
+    user_id = models.IntegerField()
+    user_name = models.CharField(max_length=255)
+    request_method = models.CharField(max_length=255)
+    request_date = models.DateTimeField(auto_now_add=False)
+
+    def __str__(self):
+        return self.user_id
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True)
 
